@@ -1,0 +1,263 @@
+@use './constants.scss' as *;
+
+
+@mixin buttonStyles($color: #2856c3, $borderColor: #2856c3, $background: #f4f7ff){
+    color: $color;
+    border: 1px solid $borderColor;
+    box-shadow: none;
+    background: $background;
+    outline: none;
+
+    &:hover{
+        background-color: $color;
+        color: whitesmoke;
+    }
+}
+
+
+body{
+    color: $primary-text-color;
+    background-color: $main-bg;
+}
+
+//LHS
+.exp-tracker-sidebar{
+    width: $sidebar-width;
+    background: $sidebar-color;
+
+    .side-bar-link{
+
+        li:hover{
+            background: #2f3a4d;
+        }
+
+        &.active li{
+            background: #2f3a4d;
+            position: relative;
+
+
+            &::after{
+                content: '';
+                position: absolute;
+                width: 3px;
+                height: 20px;
+                background: linear-gradient(0deg, #2a6ec1, #23916e);
+                left: 0px;
+                top: calc(50% - 10px);
+                border-radius: 2px;
+            }
+        }
+    }
+
+    .side-bar-icon {
+        color: transparent;
+        background: linear-gradient(45deg, #2c7bdb, #2dab83);
+        background-clip: text;
+    }
+}
+
+
+//TableCSS
+.ag-center-cols-viewport {
+    min-height: unset !important;
+}
+
+
+//export dropdown
+.exp-tracker-export-btn button{
+    @include buttonStyles(#b22fd1, #b22fd1, #fef5ff)
+}
+
+.add-transaction-btn{
+    @include buttonStyles(#1da75c, #1da75c, #f5fffa)
+}
+
+.edit-transaction-btn{
+    @include buttonStyles()
+}
+
+.delete-transaction-btn{
+    @include buttonStyles(#d93d3d, #d93d3d, #d93d3d0f)
+}
+
+//Stats
+
+[data-stat-type="income"] i{
+    color: #51b57f;
+}
+
+[data-stat-type="expense"] i{
+    color: #d06464;
+}
+
+[data-stat-type="balance"] i{
+    color: #5689c7;
+}
+
+[data-stat-type="transactions"] i{
+    color: #3f90cb;
+}
+
+
+//loader
+  .dot-spinner {
+    --uib-size: 3.5rem;
+    --uib-speed: .9s;
+    --uib-color: #3a5881;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: var(--uib-size);
+    width: var(--uib-size);
+  }
+  
+  .dot-spinner__dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .dot-spinner__dot::before {
+    content: '';
+    height: 20%;
+    width: 20%;
+    border-radius: 50%;
+    background-color: var(--uib-color);
+    transform: scale(0);
+    opacity: 0.5;
+    animation: pulse0112 calc(var(--uib-speed) * 1.111) ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(18, 31, 53, 0.3);
+  }
+  
+  .dot-spinner__dot:nth-child(2) {
+    transform: rotate(45deg);
+  }
+  
+  .dot-spinner__dot:nth-child(2)::before {
+    animation-delay: calc(var(--uib-speed) * -0.875);
+  }
+  
+  .dot-spinner__dot:nth-child(3) {
+    transform: rotate(90deg);
+  }
+  
+  .dot-spinner__dot:nth-child(3)::before {
+    animation-delay: calc(var(--uib-speed) * -0.75);
+  }
+  
+  .dot-spinner__dot:nth-child(4) {
+    transform: rotate(135deg);
+  }
+  
+  .dot-spinner__dot:nth-child(4)::before {
+    animation-delay: calc(var(--uib-speed) * -0.625);
+  }
+  
+  .dot-spinner__dot:nth-child(5) {
+    transform: rotate(180deg);
+  }
+  
+  .dot-spinner__dot:nth-child(5)::before {
+    animation-delay: calc(var(--uib-speed) * -0.5);
+  }
+  
+  .dot-spinner__dot:nth-child(6) {
+    transform: rotate(225deg);
+  }
+  
+  .dot-spinner__dot:nth-child(6)::before {
+    animation-delay: calc(var(--uib-speed) * -0.375);
+  }
+  
+  .dot-spinner__dot:nth-child(7) {
+    transform: rotate(270deg);
+  }
+  
+  .dot-spinner__dot:nth-child(7)::before {
+    animation-delay: calc(var(--uib-speed) * -0.25);
+  }
+  
+  .dot-spinner__dot:nth-child(8) {
+    transform: rotate(315deg);
+  }
+  
+  .dot-spinner__dot:nth-child(8)::before {
+    animation-delay: calc(var(--uib-speed) * -0.125);
+  }
+  
+  @keyframes pulse0112 {
+    0%,
+    100% {
+      transform: scale(0);
+      opacity: 0.5;
+    }
+  
+    50% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+//Dot Loaders.
+.loader {
+  width: 30px;
+  aspect-ratio: 2;
+  margin: 0 auto;
+  --_g: no-repeat radial-gradient(circle closest-side,#ffffff 90%,#ffffff00);
+  background: 
+    var(--_g) 0%   50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 50%;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
+}
+
+
+//App Loading spinners
+.app-loader {
+  --c:no-repeat linear-gradient(#2d7fcd 0 0);
+  background: 
+    var(--c),var(--c),var(--c),
+    var(--c),var(--c),var(--c),
+    var(--c),var(--c),var(--c);
+  background-size: 16px 16px;
+  animation: 
+    l32-1 1s infinite,
+    l32-2 1s infinite;
+}
+@keyframes l32-1 {
+  0%,100% {width:45px;height: 45px}
+  35%,65% {width:65px;height: 65px}
+}
+@keyframes l32-2 {
+  0%,40%  {background-position: 0 0,0 50%, 0 100%,50% 100%,100% 100%,100% 50%,100% 0,50% 0,  50% 50% }
+  60%,100%{background-position: 0 50%, 0 100%,50% 100%,100% 100%,100% 50%,100% 0,50% 0,0 0,  50% 50% }
+}
+
+
+/* Toast.css */
+.toast-component {
+  position: fixed; 
+  top: 50px;
+  right: -300px;
+  animation: slideIn 0.5s forwards;
+  z-index: 1000;
+}
+
+@keyframes slideIn {
+  to {
+    right: 20px;
+  }
+}

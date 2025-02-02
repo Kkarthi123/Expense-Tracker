@@ -1,0 +1,15 @@
+@import "./styles/all.scss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body{
+    height: 100vh;
+    margin: 0px;
+    width: 100%;
+    font-family: "inter", sans-serif;
+
+    #root{
+        height: inherit;
+    }
+}
