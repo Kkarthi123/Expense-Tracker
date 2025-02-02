@@ -5,7 +5,7 @@ export default [
       {
         field: "date",
         valueGetter: (params) => {
-            return new Intl.DateTimeFormat("en-GB").format(new Date(params.data.date))
+            return new Date(params.data.date).toDateString()
         }
       },
       {field: "description"},

@@ -77,7 +77,7 @@ const TableContainer = () => {
 
   //getting all data
   const getReportData = async()=>{
-    let tableData = await axios.get("http://localhost:5000/api/transactions/getAll", {withCredentials: true, params:{...dateConfig}});
+    let tableData = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/getAll`, {withCredentials: true, params:{...dateConfig}});
     if(tableData){
       setRowData(tableData.data);
       setTotalWidth(columnConfig.length * defaultColumnWidth);
@@ -127,9 +127,9 @@ const TableContainer = () => {
   
     let newTransaction;
     if(mode.isEditMode){
-      newTransaction = await axios.put(`http://localhost:5000/api/transactions/update/${mode.id} `,  {...transactionData}, {withCredentials: true});
+      newTransaction = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/update/${mode.id} `,  {...transactionData}, {withCredentials: true});
     }else{
-      newTransaction = await axios.post("http://localhost:5000/api/transactions/add",  {...transactionData}, {withCredentials: true});
+      newTransaction = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/add`,  {...transactionData}, {withCredentials: true});
     }
 
     if(newTransaction.data){
@@ -183,7 +183,7 @@ const TableContainer = () => {
 
     if(selectionData.length > 0){
       selectionData = selectionData.map((item)=> item.data._id)
-      let deletedData = await axios.post("http://localhost:5000/api/transactions/delete",  {transactionIds: selectionData}, {withCredentials: true});
+      let deletedData = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/delete`,  {transactionIds: selectionData}, {withCredentials: true});
 
       if(deletedData.data.status == 1){
         getReportData()

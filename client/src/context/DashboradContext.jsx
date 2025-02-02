@@ -29,7 +29,7 @@ export const DashboradContext = ({children}) => {
 
     const fetchDashboardStatData = async () => {
         try {
-          let statData = await axios.get('http://localhost:5000/api/dashboard/stats', {
+          let statData = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/dashboard/stats`, {
             withCredentials: true,
             params:{
               startDate: dashboardDateFilter.startDate,
@@ -48,7 +48,7 @@ export const DashboradContext = ({children}) => {
 
     const fetchChartData  = async ()=>{
       try {
-        let chartData = await axios.get('http://localhost:5000/api/dashboard/chartsData', {
+        let chartData = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/dashboard/chartsData`, {
           withCredentials: true,
           params:{
             startDate: dashboardDateFilter.startDate,
@@ -69,7 +69,7 @@ export const DashboradContext = ({children}) => {
 
     const fetchRecentTranactions = async()=>{
       try {
-        let recentItems = await axios.get('http://localhost:5000/api/dashboard/recentItems', {
+        let recentItems = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/dashboard/recentItems`, {
           withCredentials: true,
       });
 

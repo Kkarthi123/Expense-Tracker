@@ -21,7 +21,7 @@ export const AuthContext = ({children}) => {
 
     const handleOauthSuccess = async (token) => {
         try {
-            let oAuthLogin = await axios.post('http://localhost:5000/api/auth/oAuthLogin', {token}, {withCredentials: true});
+            let oAuthLogin = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/oAuthLogin`, {token}, {withCredentials: true});
             if(oAuthLogin.data){
                 setIsLoggedIn(true);
             }
@@ -33,7 +33,7 @@ export const AuthContext = ({children}) => {
 
     const hanldeCustomLogin = async (email, password) => {
         try {
-            let customLogin =  await axios.post('http://localhost:5000/api/auth/signIn', {email, password}, {withCredentials: true});
+            let customLogin =  await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signIn`, {email, password}, {withCredentials: true});
             if(customLogin.data){
                 setIsLoggedIn(true);
                 return customLogin;
@@ -56,7 +56,7 @@ export const AuthContext = ({children}) => {
 
     const handleSignUp = async (name, email, password)=>{
         try {
-            let customsignUp =  await axios.post('http://localhost:5000/api/auth/signUp', {name, email, password}, {withCredentials: true});
+            let customsignUp =  await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signUp`, {name, email, password}, {withCredentials: true});
             if(customsignUp.data){
                 setIsLoggedIn(true);
                 return customsignUp
@@ -69,7 +69,7 @@ export const AuthContext = ({children}) => {
 
     const InitApplication = async () => {
         try {
-            let profile = await axios.get('http://localhost:5000/api/profile', {withCredentials: true});
+            let profile = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/profile`, {withCredentials: true});
             setProfileData(profile.data.profile);
             setTimeout(()=>{
                 setIsAppLoading(false);

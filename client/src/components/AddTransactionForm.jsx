@@ -10,7 +10,7 @@ const AddTransactionForm = ({onSubmit, onClose, formData=null}) => {
     const [description, setDescription] = useState('');
     const [paymentMode, setPaymentMode] = useState(0);
     const [category, setCategory] = useState(TransactionCategories[0].name)
-    const [data, setDate] = useState({ 
+    const [date, setDate] = useState({ 
         startDate: new Date(), 
         endDate: new Date()
     });
@@ -41,7 +41,7 @@ const AddTransactionForm = ({onSubmit, onClose, formData=null}) => {
             description: description,
             paymentMode: paymentMode,
             category: category,
-            date: new Date(data.startDate).toISOString()
+            date: new Date(date.startDate).toISOString()
         }
         onSubmit(transaction, (isEditMode) ? {isEditMode, id: formData._id}:'');
     }
@@ -93,7 +93,7 @@ const AddTransactionForm = ({onSubmit, onClose, formData=null}) => {
                     <Datepicker 
                     inputClassName="border relative transition-all duration-300 py-2 pl-4 pr-[40px] w-full border-gray-300 outline-none rounded-md text-sm cursor-pointer bg-gray-50"
                     toggleClassName = "hidden"
-                    value={data}
+                    value={date}
                     useRange={false}
                     asSingle={true}
                     popoverDirection="up"
