@@ -23,6 +23,7 @@ const TableContainer = () => {
   const [loading, setLoading] = useState(true);
   const [totalWidth, setTotalWidth] = useState(0);
   const [quickFilterText, setQuickFilterText] = useState('');
+  const [totalAvailableTransactions, setTotalAvailableTransactions] = useState(0)
   const [isShowModal, setIsShowModal] = useState(false);
   const [dateConfig, setDateConfig] = useState({
     startDate: new Date(new Date().setDate(new Date().getDate() - 30)),
@@ -79,7 +80,8 @@ const TableContainer = () => {
   const getReportData = async()=>{
     let tableData = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/getAll`, {withCredentials: true, params:{...dateConfig}});
     if(tableData){
-      setRowData(tableData.data);
+      setRowData(tableData.data.allTransactions);
+      setTotalAvailableTransactions(tableData.data.totalDataCount)
       setTotalWidth(columnConfig.length * defaultColumnWidth);
       setTimeout(()=>{
         setLoading(false);
@@ -204,7 +206,7 @@ const TableContainer = () => {
             </div>
           </div>
         ) : (
-          rowData.length == 0 ? (
+          totalAvailableTransactions == 0 ? (
             <div className='flex justify-center items-center h-[75vh] flex-col'>
                <div>
                  <img  src={noDataImage} alt='No data'  className='m-w-[100%]'/>

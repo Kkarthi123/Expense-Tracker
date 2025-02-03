@@ -13,7 +13,8 @@ TransactionsRouter.get("/getAll", async(req, res)=>{
         let {startDate, endDate} = req.query;
 
         const allTransactions = await TransactionsModel.find({userId: req.body.userId, ...(getDateAggregationRule(startDate, endDate))}).select("-userId").sort({ date : -1 });
-        res.status(200).send(allTransactions);
+        const totalDataCount = (await TransactionsModel.find({userId: req.body.userId})).length;
+        res.status(200).send({allTransactions, totalDataCount});
     } catch (error) {
         res.status(500).json({status: 0, message: "Unable to get Transactions", error})
     }
