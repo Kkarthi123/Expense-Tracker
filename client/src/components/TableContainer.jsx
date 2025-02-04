@@ -9,9 +9,9 @@ import Modal from './Modal';
 import AddTransactionForm from './AddTransactionForm';
 import { ExportType, PaymentMode } from '../config/constants';
 import { exportToXlsx } from '../utils/export-to-xlsx';
-import CircleLoader from './circleLoader';
 import noDataImage from '../assets/no-data.png'
 import Button from './Button';
+import CircleLoader from './circleLoader';
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 
