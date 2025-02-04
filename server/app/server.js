@@ -40,9 +40,13 @@ app.use("/api/auth", AuthRouter);
 //profile
 app.use("/api/profile", authHandler, ProfileRouter)
 
+//index
+app.get("/", (req, res)=>{
+  res.send("Application works🚀")
+})
 
 
-
+//test faker data
 app.post("/testData", async (req, res) => {
    try {
     const randomTransactions = Array.from({ length: 90 }, () => ({
