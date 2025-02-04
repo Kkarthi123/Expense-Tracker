@@ -14,12 +14,18 @@
     ],
     "headers": [
         {
-          "key": "Access-Control-Allow-Credentials",
-          "value": "true"
-        },
-        {
-          "key": "Set-Cookie",
-          "value": "SameSite=None; Secure"
+          "source": "/(.*)",
+          "headers": [
+            {
+              "key": "Access-Control-Allow-Credentials",
+              "value": "true"
+            },
+           {
+             "key": "Set-Cookie",
+             "value": "SameSite=None; Secure"
+            }
+          ]
         }
+        
       ]
   }
