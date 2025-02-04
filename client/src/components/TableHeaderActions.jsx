@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import DrodpDown from './drodpDown'
+import React, {useState} from 'react';
+import DropDown from './DropDown';
 import Button from './Button';
 import Datepicker from "react-tailwindcss-datepicker";
 import { ExportType } from '../config/constants';
@@ -42,7 +42,7 @@ const TableHeaderActions = ({setQuickFilterText, quickFilterText, exportItemCall
             <div className=''>
               <Button buttonName={"Delete"} buttonTooltip={"Delete tranactions"} customClass={"delete-transaction-btn"} iconClass={"fa-solid fa-trash-can"} isDisabled={buttonConfig.deleteBtn.isDisabled} onButtonClick={buttonConfig.deleteBtn.action}/>
             </div>
-            <DrodpDown iconClass={"fa-solid fa-download"}  drodDownList={exportDrodownlist} customClass={"exp-tracker-export-btn"} itemCallback={exportItemCallback} buttonTooltip={"Export as CSV or XlS"}/>
+            <DropDown iconClass={"fa-solid fa-download"}  drodDownList={exportDrodownlist} customClass={"exp-tracker-export-btn"} itemCallback={exportItemCallback} buttonTooltip={"Export as CSV or XlS"}/>
         </div>
     </div>
   ) 

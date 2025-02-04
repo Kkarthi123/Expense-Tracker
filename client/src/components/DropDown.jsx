@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import useOutSideClickHandler from '../hooks/useOutSideClickHandler';
 
-const DrodpDown = ({children, buttonName, iconClass, isCustomDropdown = false , drodDownList, customClass, itemCallback, buttonTooltip}) => {
+const DropDown = ({children, buttonName, iconClass, isCustomDropdown = false , drodDownList, customClass, itemCallback, buttonTooltip}) => {
 
 
   const [isOpen, setIsOpen] = useState(false)
@@ -46,4 +46,4 @@ const DrodpDown = ({children, buttonName, iconClass, isCustomDropdown = false , 
   )
 }
 
-export default DrodpDown
+export default DropDown
