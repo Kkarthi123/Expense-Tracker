@@ -21,7 +21,7 @@ connectDb()
 app.use(express.json());
 
 app.use(cors({
-  origin: 'http://localhost:5173', 
+  origin: process.env.CLIENT_URL, 
   credentials: true,
 }));
 
@@ -60,13 +60,11 @@ app.post("/testData", async (req, res) => {
     res.json({message: "data Uploaded", randomTransactions})
    } catch (error) {
 
-    console.log(error)
-
       res.send(error)
    }
 });
 
 
 app.listen(port, ()=>{
-    console.log("Running in 5000")
+    console.log("Listening in "+port)
 })
