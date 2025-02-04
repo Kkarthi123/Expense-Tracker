@@ -28,7 +28,7 @@ AuthRouter.post("/signUp", async(req,res)=>{
         res.cookie('authToken', generateToken(newUser._id), {
             httpOnly: true,
             secure: true, 
-            sameSite: 'None', 
+            sameSite: 'none', 
             maxAge: 3600000, 
         });
 
@@ -52,7 +52,7 @@ AuthRouter.post("/signIn", async(req,res)=>{
         res.cookie('authToken', generateToken(user._id), {
             httpOnly: true,
             secure: true, 
-            sameSite: 'None', 
+            sameSite: 'none', 
             maxAge: 3600000, 
         });
 
@@ -77,7 +77,7 @@ AuthRouter.post("/oAuthLogin", async(req,res)=>{
             res.cookie('authToken', generateToken(isUserExist._id), { 
                 httpOnly: true, 
                 secure: true, 
-                sameSite: 'None',
+                sameSite: 'none',
                 maxAge: 3600000, 
             });
 
@@ -100,7 +100,7 @@ AuthRouter.post("/oAuthLogin", async(req,res)=>{
             res.cookie('authToken', generateToken(newUser._id), {
                 httpOnly: true, 
                 secure: true, 
-                sameSite: 'None', 
+                sameSite: 'none', 
                 maxAge: 3600000, 
             });
 
