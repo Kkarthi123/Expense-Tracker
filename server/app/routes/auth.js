@@ -26,7 +26,6 @@ AuthRouter.post("/signUp", async(req,res)=>{
         await newUser.save();
 
         res.cookie('authToken', generateToken(newUser._id), {
-            httpOnly: true,
             secure: true, 
             maxAge: 3600000, 
         });
@@ -49,7 +48,6 @@ AuthRouter.post("/signIn", async(req,res)=>{
     if(user && await user.validatePassword(password)){
 
         res.cookie('authToken', generateToken(user._id), {
-            httpOnly: true,
             secure: true, 
             maxAge: 3600000, 
         });
@@ -73,7 +71,6 @@ AuthRouter.post("/oAuthLogin", async(req,res)=>{
         const isUserExist = await User.findOne({email});
         if(isUserExist){
             res.cookie('authToken', generateToken(isUserExist._id), { 
-                httpOnly: true, 
                 secure: true, 
                 maxAge: 3600000, 
             });
@@ -95,7 +92,6 @@ AuthRouter.post("/oAuthLogin", async(req,res)=>{
             await newUser.save();
 
             res.cookie('authToken', generateToken(newUser._id), {
-                httpOnly: true, 
                 secure: true, 
                 maxAge: 3600000, 
             });
