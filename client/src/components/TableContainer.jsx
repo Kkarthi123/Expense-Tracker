@@ -11,7 +11,8 @@ import { ExportType, PaymentMode } from '../config/constants';
 import { exportToXlsx } from '../utils/export-to-xlsx';
 import noDataImage from '../assets/no-data.png'
 import Button from './Button';
-import CircleLoader from './circleLoader';
+import CircleLoader from './CircleLoader';
+
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import CircleLoader from './circleLoader'
 import DotLoaders from './DotLoaders'
 
 const AsyncButton = ({buttonName, customButtonClass, buttonTooltip, isActionRunning, onButtonClick=null, buttonType}) => {
