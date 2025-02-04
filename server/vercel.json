@@ -11,5 +11,15 @@
         "src": "/(.*)",
         "dest": "app/server.js"
       }
-    ]
+    ],
+    "headers": [
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        },
+        {
+          "key": "Set-Cookie",
+          "value": "SameSite=None; Secure"
+        }
+      ]
   }
