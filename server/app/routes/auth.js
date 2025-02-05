@@ -25,16 +25,17 @@ AuthRouter.post("/signUp", async(req,res)=>{
 
         await newUser.save();
 
-        res.cookie('authToken', generateToken(newUser._id), {        
-                httpOnly: true, 
-                secure: true, 
-                sameSite: 'none', 
-                maxAge: 3600000, 
-        });
+        // res.cookie('authToken', generateToken(newUser._id), {        
+        //         httpOnly: true, 
+        //         secure: true, 
+        //         sameSite: 'none', 
+        //         maxAge: 3600000, 
+        // });
 
         res.json({
             name,
             email,
+            authToken: generateToken(newUser._id)
         })
 
     }
@@ -49,17 +50,18 @@ AuthRouter.post("/signIn", async(req,res)=>{
 
     if(user && await user.validatePassword(password)){
 
-        res.cookie('authToken', generateToken(user._id), {
-            httpOnly: true, 
-            secure: true, 
-            sameSite: 'none', 
-            maxAge: 3600000, 
-        });
+        // res.cookie('authToken', generateToken(user._id), {
+        //     httpOnly: true, 
+        //     secure: true, 
+        //     sameSite: 'none', 
+        //     maxAge: 3600000, 
+        // });
 
         res.json({
             email,
             name: user.name,
             profilePicture: user.profilePicture,
+            authToken: generateToken(user._id)
         })
 
     }else{
@@ -74,17 +76,18 @@ AuthRouter.post("/oAuthLogin", async(req,res)=>{
     try {
         const isUserExist = await User.findOne({email});
         if(isUserExist){
-            res.cookie('authToken', generateToken(isUserExist._id), { 
-                httpOnly: true, 
-                secure: true, 
-                sameSite: 'none', 
-                maxAge: 3600000,  
-            });
+            // res.cookie('authToken', generateToken(isUserExist._id), { 
+            //     httpOnly: true, 
+            //     secure: true, 
+            //     sameSite: 'none', 
+            //     maxAge: 3600000,  
+            // });
 
             res.json({
                 email,
                 name: isUserExist.name,
                 profilePicture: isUserExist.profilePicture,
+                authToken: generateToken(isUserExist._id)
             })
 
         }else{
@@ -97,17 +100,18 @@ AuthRouter.post("/oAuthLogin", async(req,res)=>{
             })
             await newUser.save();
 
-            res.cookie('authToken', generateToken(newUser._id), {
-                httpOnly: true, 
-                secure: true, 
-                sameSite: 'none', 
-                maxAge: 3600000, 
-            });
+            // res.cookie('authToken', generateToken(newUser._id), {
+            //     httpOnly: true, 
+            //     secure: true, 
+            //     sameSite: 'none', 
+            //     maxAge: 3600000, 
+            // });
 
             res.json({
                 email,
                 name: newUser.name,
                 profilePicture: newUser.profilePicture,
+                authToken: generateToken(newUser._id)
             })
     }
     } catch (error) {

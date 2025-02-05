@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
-import { deleteCookie, getCookie } from '../utils/common';
+import { deleteCookie, getCookie, setCookie } from '../utils/common';
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const AuthenticationContext = React.createContext();
@@ -21,8 +21,9 @@ export const AuthContext = ({children}) => {
 
     const handleOauthSuccess = async (token) => {
         try {
-            let oAuthLogin = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/oAuthLogin`, {token}, {withCredentials: true});
-            if(oAuthLogin.data){
+            let {data} = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/oAuthLogin`, {token}, {withCredentials: true});
+            if(data){
+                setCookie("authToken", data?.authToken, 1)
                 setIsLoggedIn(true);
             }
         } catch (error) {
@@ -33,8 +34,8 @@ export const AuthContext = ({children}) => {
 
     const hanldeCustomLogin = async (email, password) => {
         try {
-            let customLogin =  await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signIn`, {email, password}, {withCredentials: true});
-            if(customLogin.data){
+            let {data} =  await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signIn`, {email, password}, {withCredentials: true});
+            if(data){
                 setIsLoggedIn(true);
                 return customLogin;
             }
