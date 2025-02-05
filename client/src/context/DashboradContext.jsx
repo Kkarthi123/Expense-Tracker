@@ -8,7 +8,7 @@ export const useDashboradContext = () => useContext(DashContext);
 
 export const DashboradContext = ({children}) => {
 
-   const [statData, setStatData] = useState([]);
+   const [statData, setStatData] = useState(null);
    const [chartData, setChartData] = useState(null);
    const [recentItems, setRecentItems] = useState([]);
    const [isChartDataLoading, SetIsChartDataLoading] = useState(true);
