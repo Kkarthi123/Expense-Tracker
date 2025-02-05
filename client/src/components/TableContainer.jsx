@@ -12,6 +12,7 @@ import { exportToXlsx } from '../utils/export-to-xlsx';
 import noDataImage from '../assets/no-data.png'
 import Button from './Button';
 import CircleLoader from './CircleLoader';
+import axiosInstance from '../utils/axios-instance';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -79,7 +80,7 @@ const TableContainer = () => {
 
   //getting all data
   const getReportData = async()=>{
-    let tableData = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/getAll`, {withCredentials: true, params:{...dateConfig}});
+    let tableData = await axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/getAll`, {withCredentials: true, params:{...dateConfig}});
     if(tableData){
       setRowData(tableData.data.allTransactions);
       setTotalAvailableTransactions(tableData.data.totalDataCount)
@@ -130,9 +131,9 @@ const TableContainer = () => {
   
     let newTransaction;
     if(mode.isEditMode){
-      newTransaction = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/update/${mode.id} `,  {...transactionData}, {withCredentials: true});
+      newTransaction = await axiosInstance.put(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/update/${mode.id} `,  {...transactionData}, {withCredentials: true});
     }else{
-      newTransaction = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/add`,  {...transactionData}, {withCredentials: true});
+      newTransaction = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/add`,  {...transactionData}, {withCredentials: true});
     }
 
     if(newTransaction.data){
@@ -186,7 +187,7 @@ const TableContainer = () => {
 
     if(selectionData.length > 0){
       selectionData = selectionData.map((item)=> item.data._id)
-      let deletedData = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/delete`,  {transactionIds: selectionData}, {withCredentials: true});
+      let deletedData = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/delete`,  {transactionIds: selectionData}, {withCredentials: true});
 
       if(deletedData.data.status == 1){
         getReportData()

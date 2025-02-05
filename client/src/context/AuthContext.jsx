@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
 import { deleteCookie, getCookie, setCookie } from '../utils/common';
+import axiosInstance from '../utils/axios-instance';
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const AuthenticationContext = React.createContext();
@@ -21,7 +22,7 @@ export const AuthContext = ({children}) => {
 
     const handleOauthSuccess = async (token) => {
         try {
-            let {data} = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/oAuthLogin`, {token}, {withCredentials: true});
+            let {data} = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/oAuthLogin`, {token}, {withCredentials: true});
             if(data){
                 setCookie("authToken", data?.authToken, 1)
                 setIsLoggedIn(true);
@@ -34,7 +35,7 @@ export const AuthContext = ({children}) => {
 
     const hanldeCustomLogin = async (email, password) => {
         try {
-            let {data} =  await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signIn`, {email, password}, {withCredentials: true});
+            let {data} =  await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signIn`, {email, password}, {withCredentials: true});
             if(data){
                 setIsLoggedIn(true);
                 return customLogin;
@@ -57,7 +58,7 @@ export const AuthContext = ({children}) => {
 
     const handleSignUp = async (name, email, password)=>{
         try {
-            let customsignUp =  await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signUp`, {name, email, password}, {withCredentials: true});
+            let customsignUp =  await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signUp`, {name, email, password}, {withCredentials: true});
             if(customsignUp.data){
                 setIsLoggedIn(true);
                 return customsignUp
@@ -70,7 +71,7 @@ export const AuthContext = ({children}) => {
 
     const InitApplication = async () => {
         try {
-            let profile = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/profile`, {withCredentials: true});
+            let profile = await axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/api/profile`, {withCredentials: true});
             setProfileData(profile.data.profile);
             setTimeout(()=>{
                 setIsAppLoading(false);
