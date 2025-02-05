@@ -24,6 +24,8 @@ app.use(cors({
   origin: process.env.CLIENT_URL, 
   credentials: true,
   methods: 'GET,POST,PUT,DELETE',
+  maxAge: 86400,
+  allowedHeaders: ['Authorization', 'Content-Type'],
 }));
 
 app.use(cookieParser())

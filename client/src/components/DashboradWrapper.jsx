@@ -5,6 +5,8 @@ import Datepicker from 'react-tailwindcss-datepicker';
 import PieChart from './Dashboards/PieChart';
 import BarChart from './Dashboards/BarChart';
 import TopItems from './Dashboards/TopItems';
+import Skeleton from '@mui/material/Skeleton';
+
 
 
 const DashboradWrapper = () => {
@@ -31,14 +33,26 @@ const DashboradWrapper = () => {
       </div>
       <div className='flex items-center gap-x-16'>
             {
-              statData.map((stat, index) => {
-                return <StatCard key={index} stat={stat} />
-              })
+              statData ? (
+                statData.map((stat, index) => {
+                  return <StatCard key={index} stat={stat} animation="wave"/>
+                })
+
+              ):(
+                <div className='flex gap-x-16'>
+                  {
+                    new Array(4).fill(0).map((item, i)=>{
+                      return <Skeleton key={i} className="rounded" variant="rectangular" width={230} height={90} sx={{ bgcolor: '#d4dbe1' }}/>
+                    })
+                  }
+              </div>
+              )
             }
       </div>
       <div className='main-chart-wrapper py-10'>
+     
         {
-          chartData && 
+          chartData ?( 
           <>
             <div className='flex gap-x-8'>
               <div className='flex flex-wrap gap-8 flex-[0]'>
@@ -62,6 +76,20 @@ const DashboradWrapper = () => {
               </div>
             </div>
           </>
+          ):(
+            <>
+              <div className='flex flex-col gap-8'>
+                <div className='flex gap-8'>
+                    <Skeleton className="rounded" variant="rectangular" width={450} height={380} sx={{ bgcolor: '#d4dbe1' }}/>
+                    <Skeleton className="rounded" variant="rectangular" width={900} height={380} sx={{ bgcolor: '#d4dbe1' }}/>
+                </div>
+                <div className='flex gap-8'>
+                    <Skeleton className="rounded" variant="rectangular" width={900} height={380} sx={{ bgcolor: '#d4dbe1' }}/>
+                    <Skeleton className="rounded" variant="rectangular" width={450} height={380} sx={{ bgcolor: '#d4dbe1' }}/>
+                </div>
+              </div>
+            </>
+          )
 
         }
 
