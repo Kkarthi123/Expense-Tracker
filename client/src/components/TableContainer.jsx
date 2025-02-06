@@ -135,7 +135,8 @@ const TableContainer = () => {
 
   //add new 
   const addNewTransaction = async (transactionData, mode)=>{
-  
+    onClose();
+    setISReportAPILoading(true)
     let newTransaction;
     if(mode.isEditMode){
       newTransaction = await axiosInstance.put(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/update/${mode.id} `,  {...transactionData}, {withCredentials: true});
@@ -144,11 +145,11 @@ const TableContainer = () => {
     }
 
     if(newTransaction.data?.status == 1){
-      onClose();
       showToast(newTransaction.data?.message)
       getReportData()
     }else{
       showToast(newTransaction.data?.message)
+      setISReportAPILoading(false)
     }
 
     
@@ -196,6 +197,8 @@ const TableContainer = () => {
     let selectionData = gridRef.current.api.getSelectedNodes();
 
     if(selectionData.length > 0){
+     setISReportAPILoading(true)
+
       selectionData = selectionData.map((item)=> item.data._id)
       let {data} = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/delete`,  {transactionIds: selectionData}, {withCredentials: true});
 
@@ -204,6 +207,7 @@ const TableContainer = () => {
         getReportData()
       }else{
         showToast(data?.message, false)
+        setISReportAPILoading(true)
       }
     }
   }
