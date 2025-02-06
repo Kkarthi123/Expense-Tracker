@@ -145,8 +145,8 @@ const TableContainer = () => {
     }
 
     if(newTransaction.data?.status == 1){
+      await getReportData()
       showToast(newTransaction.data?.message)
-      getReportData()
     }else{
       showToast(newTransaction.data?.message)
       setISReportAPILoading(false)
@@ -203,8 +203,9 @@ const TableContainer = () => {
       let {data} = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/delete`,  {transactionIds: selectionData}, {withCredentials: true});
 
       if(data?.status == 1){
+        
+        await getReportData();
         showToast(data?.message, false)
-        getReportData()
       }else{
         showToast(data?.message, false)
         setISReportAPILoading(true)
