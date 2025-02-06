@@ -13,6 +13,8 @@ import noDataImage from '../assets/no-data.png'
 import Button from './Button';
 import CircleLoader from './CircleLoader';
 import axiosInstance from '../utils/axios-instance';
+import { useToastContext } from '../context/ToastContext';
+
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -23,6 +25,7 @@ const defaultColumnWidth = 250;
 const TableContainer = () => {
   const [rowData, setRowData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isReportAPILoading, setISReportAPILoading] = useState(false)
   const [totalWidth, setTotalWidth] = useState(0);
   const [quickFilterText, setQuickFilterText] = useState('');
   const [totalAvailableTransactions, setTotalAvailableTransactions] = useState(0)
@@ -72,6 +75,8 @@ const TableContainer = () => {
     return { mode: "multiRow" };
   }, []);
 
+  const {showToast} = useToastContext();
+
   
   useEffect(() => {
     getReportData()
@@ -80,11 +85,13 @@ const TableContainer = () => {
 
   //getting all data
   const getReportData = async()=>{
+    setISReportAPILoading(true)
     let tableData = await axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/getAll`, {withCredentials: true, params:{...dateConfig}});
     if(tableData){
       setRowData(tableData.data.allTransactions);
       setTotalAvailableTransactions(tableData.data.totalDataCount)
       setTotalWidth(columnConfig.length * defaultColumnWidth);
+      setISReportAPILoading(false)
       setTimeout(()=>{
         setLoading(false);
       }, 1000)
@@ -136,9 +143,12 @@ const TableContainer = () => {
       newTransaction = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/add`,  {...transactionData}, {withCredentials: true});
     }
 
-    if(newTransaction.data){
+    if(newTransaction.data?.status == 1){
       onClose();
+      showToast(newTransaction.data?.message)
       getReportData()
+    }else{
+      showToast(newTransaction.data?.message)
     }
 
     
@@ -187,10 +197,13 @@ const TableContainer = () => {
 
     if(selectionData.length > 0){
       selectionData = selectionData.map((item)=> item.data._id)
-      let deletedData = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/delete`,  {transactionIds: selectionData}, {withCredentials: true});
+      let {data} = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/api/transactions/delete`,  {transactionIds: selectionData}, {withCredentials: true});
 
-      if(deletedData.data.status == 1){
+      if(data?.status == 1){
+        showToast(data?.message, false)
         getReportData()
+      }else{
+        showToast(data?.message, false)
       }
     }
   }
@@ -223,7 +236,8 @@ const TableContainer = () => {
               <div className='exp-trackker-table-header-actions'>
                 <TableHeaderActions setQuickFilterText={setQuickFilterText} quickFilterText={quickFilterText} exportItemCallback={exportItemCallback} buttonConfig={buttonConfig} datePickerCallback={datePickerCallback} dateConfig={dateConfig}/>
               </div>
-              <div className="ag-theme-material bg-[#e4ebf0] rounded-[12px] p-[10px]" style={{ height: (rowData.length) > 15 ? "80vh" : "auto" }}>
+              <div className="ag-theme-material bg-[#e4ebf0] rounded-[12px] p-[10px] relative" style={{ height: (rowData.length) > 15 ? "80vh" : "auto" }}>
+                {isReportAPILoading && <div className='absolute top-0 left-0 z-[3] w-full h-full flex place-items-center justify-center bg-[#ffffffb3] text-lg'>Loading<i className="fa  animate-spin fa-spinner duration-1000 text-[20px] ml-2"></i></div>}
                 <AgGridReact
                   ref={gridRef}
                   columnDefs={columnConfig}

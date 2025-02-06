@@ -252,12 +252,15 @@ body{
   position: fixed; 
   top: 50px;
   right: -300px;
-  animation: slideIn 0.5s forwards;
+  animation: slideIn 0.4s forwards ;
   z-index: 1000;
 }
 
 @keyframes slideIn {
-  to {
+  70% {
+    right: 40px;
+  }
+  100%{
     right: 20px;
   }
 }

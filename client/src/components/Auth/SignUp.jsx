@@ -11,16 +11,13 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isButtonLoading, setIsButtonLoading] = useState(false)
 
-  const {handleSignUp} = useAuthContext()
+
+  const {handleSignUp, isAuthRunning} = useAuthContext()
 
   const signUpFormSubmit = async(e)=>{
     e.preventDefault();
-    setIsButtonLoading(true)
     await handleSignUp(userName, email, password);
-    setIsButtonLoading(false);
-
   }
 
   return (
@@ -60,7 +57,7 @@ const SignUp = () => {
             </div>
           </div>
           <div>
-          <AsyncButton buttonType="submit" buttonName="Sign Up" customButtonClass="p-2 bg-[#259b70] w-full rounded-md text-white hover:bg-[#228b65]" isActionRunning={isButtonLoading}/>
+          <AsyncButton buttonType="submit" buttonName="Sign Up" customButtonClass="p-2 bg-[#259b70] w-full rounded-md text-white hover:bg-[#228b65]" isActionRunning={isAuthRunning}/>
           </div>
         </form>
         <div className='mt-3 text-[13px]'>

@@ -3,16 +3,18 @@ import Toast from '../components/Toast';
 
 const ToasterContext = createContext();
 
+
 export const ToastContext = ({children}) => {
 
     const [toast, setToast] = useState(null);
 
-    const showToast = (message, isSuccess = false, isError = false, duration = 3000) => {
-        setToast({ message, isSuccess, isError, duration });
+    const showToast = (message, isSuccess = true, duration = 5000) => {
+        setToast({ message, isSuccess, duration });
     };
 
+
   return (
-    <ToasterContext.pr value={{ showToast }}>
+    <ToasterContext.Provider value={{ showToast }}>
       {children}
       {toast && (
         <Toast
@@ -20,10 +22,13 @@ export const ToastContext = ({children}) => {
           isSuccess={toast.isSuccess}
           isError={toast.isError}
           duration={toast.duration}
+          setToast={setToast}
         />
       )}
-    </ToasterContext.pr>
+    </ToasterContext.Provider>
   )
 }
 
-export const useToastContext = ()=>{ useContext(ToasterContext) }
+export const useToastContext = () => useContext(ToasterContext);
+
+

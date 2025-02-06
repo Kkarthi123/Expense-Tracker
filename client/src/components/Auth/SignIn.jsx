@@ -10,15 +10,11 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isButtonLoading, setIsButtonLoading] = useState(false)
-  
-  const {hanldeCustomLogin} = useAuthContext();
+  const {hanldeCustomLogin, isAuthRunning} = useAuthContext();
   
   const loginFormSubmit = async (e)=>{
     e.preventDefault();
-    setIsButtonLoading(true)
     await hanldeCustomLogin(email, password);
-    setIsButtonLoading(false);
   }
 
   return (
@@ -54,7 +50,7 @@ const SignIn = () => {
             </div>
           </div>
           <div>
-            <AsyncButton buttonType="submit" buttonName="Sign In" customButtonClass="p-2 bg-[#259b70] w-full rounded-md text-white hover:bg-[#228b65]" isActionRunning={isButtonLoading}/>
+            <AsyncButton buttonType="submit" buttonName="Sign In" customButtonClass="p-2 bg-[#259b70] w-full rounded-md text-white hover:bg-[#228b65]" isActionRunning={isAuthRunning}/>
           </div>
         </form>
         <div className='mt-3 text-[13px]'>
