@@ -205,9 +205,9 @@ const TableContainer = () => {
       if(data?.status == 1){
         
         await getReportData();
-        showToast(data?.message, false)
+        showToast(data?.message)
       }else{
-        showToast(data?.message, false)
+        showToast(data?.message)
         setISReportAPILoading(true)
       }
     }
